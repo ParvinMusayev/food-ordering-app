@@ -5,7 +5,7 @@ import Home from "./pages/Home/Home";
 import Products from "./pages/Products/Products";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Search from "./pages/Search/Search";
-
+//fake photoland
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 
