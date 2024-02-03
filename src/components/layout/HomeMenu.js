@@ -1,4 +1,5 @@
 import Image from "next/image";
+import MenuItem from "../menu/MenuItem";
 
 export default function HomeMenu() {
   return (
@@ -19,7 +20,14 @@ export default function HomeMenu() {
             Menu
         </h2>
       </div>
-      <div className="grid sm:grid-cols-3 gap-4"></div>
+      <div className="grid sm:grid-cols-3 gap-4">
+        <MenuItem />
+        <MenuItem />
+        <MenuItem />
+        <MenuItem />
+        <MenuItem />
+        <MenuItem />
+      </div>
     </section>
   );
 }
