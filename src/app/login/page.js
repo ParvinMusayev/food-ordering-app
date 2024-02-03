@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -9,10 +10,13 @@ export default function LoginPage() {
   const [loginInProgress, setLoginInProgress] = useState(false);
 
   async function handleFormSubmit(ev) {
-    ev.preventDefault()
+    ev.preventDefault();
 
-    
+    setLoginInProgress(true);
 
+    await signIn("credentials", { email, password, callbackUrl:"/" });
+
+    setLoginInProgress(false);
   }
   return (
     <section className="mt-8">
