@@ -14,11 +14,12 @@ export default function HomeMenu() {
         </div>
       </div>
       <div className="text-center mb-4">
-      <div className="text-center mb-4">
-        <SectionHeaders
-          subHeader={'check out'}
-          mainHeader={'Our Best Sellers'} />
-      </div>
+        <div className="text-center mb-4">
+          <SectionHeaders
+            subHeader={"check out"}
+            mainHeader={"Our Best Sellers"}
+          />
+        </div>
       </div>
       <div className="grid sm:grid-cols-3 gap-4">
         <MenuItem />

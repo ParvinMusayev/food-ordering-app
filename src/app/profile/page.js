@@ -10,6 +10,17 @@ export default function ProfilePage() {
   const [userName, setUserName] = useState(session?.data?.user?.name || " ");
   const { status } = session;
 
+
+  async function handleProfileInfoUptade(ev){
+    ev.preventDefault()
+
+    const response = await fetch('/api/profile', {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({name: userName}),
+      });
+  }
+
   if (status === "loading") {
     return "Loading...";
   }
@@ -22,9 +33,11 @@ export default function ProfilePage() {
   return (
     <section className="mt-8">
       <h1 className="text-center text-primary text-4xl mb-4">Profile</h1>
+      
       <div className="max-w-md mx-auto">
         <div className="flex gap-4 items-center">
           <div>
+            
             <div className="p-2 rounded-lg relative">
               <Image
                 className="rounded-lg w-full h-full mb-2"
@@ -37,8 +50,13 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          <form className="grow">
-            <input type="text" placeholder="First and last name" />
+          <form className="grow" onSubmit={handleProfileInfoUptade}>
+            <input
+              type="text"
+              value={userName}
+              onChange={(ev) => setUserName(ev.target.value)}
+              placeholder="First and last name"
+            />
             <input type="email" value={session.data.user.email} disabled />
             <button type="submit">Save</button>
           </form>
