@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
   const session = useSession();
-  const [userName, setUserName] = useState()
+  const [userName, setUserName] = useState("")
   const { status } = session;
 
   useEffect(() => {

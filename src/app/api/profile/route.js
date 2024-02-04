@@ -10,11 +10,15 @@ export async function PUT(req) {
 
   const email = session.user.email;
 
-  
+
+  console.log({data})
   if ("name" in data) {
     //uptade user name
-    await User.updateOne({ email }, { name: data.name });
-  }
+
+    await User.updateOne({email}, {name:data.name})
+    console.log({data})
+
+}
 
   return Response.json(true);
 }
