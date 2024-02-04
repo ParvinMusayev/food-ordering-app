@@ -3,12 +3,18 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
   const session = useSession();
-  const [userName, setUserName] = useState(session?.data?.user?.name || " ");
+  const [userName, setUserName] = useState()
   const { status } = session;
+
+  useEffect(() => {
+    if(status === 'authenticated'){
+        setUserName(session.data.user.name)
+    }
+  }, [session, status])
 
 
   async function handleProfileInfoUptade(ev){
