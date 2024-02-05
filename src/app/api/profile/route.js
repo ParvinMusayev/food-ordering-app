@@ -10,11 +10,19 @@ export async function PUT(req) {
 
   const email = session.user.email;
 
-  if ("name" in data) {
-    //uptade user name
-
-    await User.updateOne({ email }, { name: data.name });
-  }
+  //uptade user name
+  await User.updateOne({ email }, data);
 
   return Response.json(true);
+}
+
+export async function GET(req) {
+  mongoose.connect(process.env.MONGO_URL);
+  
+
+  const session = await getServerSession(authOptions);
+
+  const email = session.user.email;
+
+  return Response.json(await User.findOne({ email }));
 }

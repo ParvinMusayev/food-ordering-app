@@ -11,11 +11,26 @@ import toast from "react-hot-toast";
 export default function ProfilePage() {
   const session = useSession();
   const { status } = session;
+
   const [userName, setUserName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
 
   useEffect(() => {
     if (status === "authenticated") {
       setUserName(session.data.user.name);
+      fetch("/api/profile").then((response) => {
+        response.json().then((data) => {
+          setPhone(data.phone);
+          setStreetAddress(data.streetAddress);
+          setPostalCode(data.postalCode);
+          setCity(data.city);
+          setCountry(data.country);
+        });
+      });
     }
   }, [session, status]);
 
@@ -26,7 +41,14 @@ export default function ProfilePage() {
       const response = await fetch("/api/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: userName }),
+        body: JSON.stringify({
+          name: userName,
+          streetAddress,
+          phone,
+          postalCode,
+          city,
+          country,
+        }),
       });
       if (response.ok) resolve();
       else reject();
@@ -66,7 +88,7 @@ export default function ProfilePage() {
       <h1 className="text-center text-primary text-4xl mb-4">Profile</h1>
 
       <div className="max-w-md mx-auto">
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-4 ">
           <div>
             <div className="p-2 rounded-lg relative max-w-[120px]">
               <Image
@@ -97,6 +119,39 @@ export default function ProfilePage() {
               placeholder="First and last name"
             />
             <input type="email" value={session.data.user.email} disabled />
+
+            <input
+              value={phone}
+              onChange={(ev) => setPhone(ev.target.value)}
+              type="tel"
+              placeholder="Phone number"
+            />
+            <input
+              value={streetAddress}
+              onChange={(ev) => setStreetAddress(ev.target.value)}
+              type="text"
+              placeholder="Street address"
+            />
+            <div className="flex gap-2">
+              <input
+                value={postalCode}
+                onChange={(ev) => setPostalCode(ev.target.value)}
+                type="text"
+                placeholder="Postal code"
+              />
+              <input
+                value={city}
+                onChange={(ev) => setCity(ev.target.value)}
+                type="text"
+                placeholder="City"
+              />
+            </div>
+            <input
+              value={country}
+              onChange={(ev) => setCountry(ev.target.value)}
+              type="text"
+              placeholder="Country"
+            />
             <button type="submit">Save</button>
           </form>
         </div>
