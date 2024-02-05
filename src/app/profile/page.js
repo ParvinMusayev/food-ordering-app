@@ -21,6 +21,7 @@ export default function ProfilePage() {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [profileFetched, setProfileFetched] = useState(false);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -33,6 +34,7 @@ export default function ProfilePage() {
           setCity(data.city);
           setCountry(data.country);
           setIsAdmin(data.admin);
+          setProfileFetched(true)
         });
       });
     }
@@ -78,7 +80,7 @@ export default function ProfilePage() {
     }
   }
 
-  if (status === "loading") {
+  if (status === "loading" || !profileFetched) {
     return "Loading...";
   }
 
@@ -89,8 +91,7 @@ export default function ProfilePage() {
   const userImage = session.data?.user?.image;
   return (
     <section className="mt-8">
-        <UserTabs isAdmin={isAdmin} />
-    
+      <UserTabs isAdmin={isAdmin} />
 
       <div className="max-w-md mx-auto mt-8">
         <div className="flex gap-4 ">
