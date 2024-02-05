@@ -27,18 +27,17 @@ export const authOptions = {
         const user = await User.findOne({ email });
         const passwordOk = user && bcrypt.compareSync(password, user.password);
 
-      
-        console.log({passwordOk})
+        console.log({ passwordOk });
 
         if (passwordOk) {
           return user;
         }
-        
+
         return null;
       },
     }),
   ],
-}
+};
 
 const handler = NextAuth(authOptions);
 

@@ -4,6 +4,7 @@ import InfoBox from "@/components/layout/InfoBox";
 import SuccessBox from "@/components/layout/SuccessBox";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -18,6 +19,7 @@ export default function ProfilePage() {
   const [postalCode, setPostalCode] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -29,6 +31,7 @@ export default function ProfilePage() {
           setPostalCode(data.postalCode);
           setCity(data.city);
           setCountry(data.country);
+          setIsAdmin(data.admin);
         });
       });
     }
@@ -85,6 +88,18 @@ export default function ProfilePage() {
   const userImage = session.data?.user?.image;
   return (
     <section className="mt-8">
+      <div className="flex mx-auto justify-center gap-2 tabs">
+        <Link className="active" href={"/profile"}>
+          Profile
+        </Link>
+        {isAdmin && (
+          <>
+            <Link href={"/categories"}>Categories</Link>
+            <Link href={"/menu-items"}>Menu Items</Link>
+            <Link href={"/users"}>Users</Link>
+          </>
+        )}
+      </div>
       <h1 className="text-center text-primary text-4xl mb-4">Profile</h1>
 
       <div className="max-w-md mx-auto">

@@ -18,7 +18,6 @@ export async function PUT(req) {
 
 export async function GET(req) {
   mongoose.connect(process.env.MONGO_URL);
-  
 
   const session = await getServerSession(authOptions);
 
