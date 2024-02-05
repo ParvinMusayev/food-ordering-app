@@ -1,5 +1,7 @@
 "use client";
 
+import InfoBox from "@/components/layout/InfoBox";
+import SuccessBox from "@/components/layout/SuccessBox";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -64,18 +66,14 @@ export default function ProfilePage() {
 
       <div className="max-w-md mx-auto">
         {saved && (
-          <h2 className="text-center bg-green-100 p-4 rounded-lg border border-green-300">
-            Profile saved!
-          </h2>
+          <SuccessBox>Profile saved!</SuccessBox>
         )}
         {isSaving && (
-          <h2 className="text-center bg-blue-100 p-4 rounded-lg border border-blue-300">
-            Saving...
-          </h2>
+          <InfoBox>Saving...</InfoBox>
         )}
         <div className="flex gap-4 items-center">
           <div>
-            <div className="p-2 rounded-lg relative">
+            <div className="p-2 rounded-lg relative max-w-[120px]">
               <Image
                 className="rounded-lg w-full h-full mb-2"
                 src={userImage ? userImage : "/profilpic.png"}
