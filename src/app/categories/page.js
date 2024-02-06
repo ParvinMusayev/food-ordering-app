@@ -1,21 +1,32 @@
 "use client";
 
-import UserTabs from "@/components/layout/UserTabs";
 import { useEffect, useState } from "react";
-
+import UserTabs from "@/components/layout/UserTabs";
 import { useProfile } from "@/components/UseProfile";
+import toast from "react-hot-toast";
 
 export default function CategoriesPage() {
   const [newCategoryName, setNewCategoryName] = useState("");
 
   const { loading: profileLoading, data: profileData } = useProfile();
 
-  function handleNewCategorySubmit() {
+  async function handleNewCategorySubmit() {
     ev.preventDefault();
-    fetch("/api/categories", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: newCategoryName }),
+
+    const creationPromise = new Promise(async (resolve, reject) => {
+      const response = await fetch("/api/categories", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: newCategoryName }),
+      });
+      
+      if (response.ok) resolve();
+      else reject();
+    });
+    await toast.promise(creationPromise, {
+      loading: "Creating your new category...",
+      success: "Category created",
+      error: "Error, sorry...",
     });
   }
 

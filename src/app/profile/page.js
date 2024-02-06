@@ -1,11 +1,9 @@
 "use client";
 
-import InfoBox from "@/components/layout/InfoBox";
-import SuccessBox from "@/components/layout/SuccessBox";
 import UserTabs from "@/components/layout/UserTabs";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
+
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -34,7 +32,7 @@ export default function ProfilePage() {
           setCity(data.city);
           setCountry(data.country);
           setIsAdmin(data.admin);
-          setProfileFetched(true)
+          setProfileFetched(true);
         });
       });
     }
