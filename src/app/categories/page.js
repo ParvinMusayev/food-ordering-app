@@ -10,7 +10,7 @@ export default function CategoriesPage() {
 
   const { loading: profileLoading, data: profileData } = useProfile();
 
-  async function handleNewCategorySubmit() {
+  async function handleNewCategorySubmit(ev) {
     ev.preventDefault();
 
     const creationPromise = new Promise(async (resolve, reject) => {
@@ -19,7 +19,7 @@ export default function CategoriesPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: newCategoryName }),
       });
-      
+
       if (response.ok) resolve();
       else reject();
     });
