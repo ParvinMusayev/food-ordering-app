@@ -23,25 +23,34 @@ export default function CategoriesPage() {
     });
   }
 
-  async function handleNewCategorySubmit(ev) {
+  async function handleCategorySubmit(ev) {
     ev.preventDefault();
 
     const creationPromise = new Promise(async (resolve, reject) => {
+      const data = { name: categoryName };
+
+      if (editedCategory) {
+        data._id = editedCategory._id;
+      }
+
       const response = await fetch("/api/categories", {
-        method: "POST",
+        method: editedCategory ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: categoryName }),
+        body: JSON.stringify(data),
       });
 
       setCategoryName("");
       fetchCategories();
+      setEditedCategory(null);
 
       if (response.ok) resolve();
       else reject();
     });
     await toast.promise(creationPromise, {
-      loading: "Creating your new category...",
-      success: "Category created",
+      loading: editedCategory
+        ? "Updating category..."
+        : "Creating your new category...",
+      success: editedCategory ? "Category updated" : "Category created",
       error: "Error, sorry...",
     });
   }
@@ -56,7 +65,7 @@ export default function CategoriesPage() {
   return (
     <section className="mt-8 max-w-2xl mx-auto">
       <UserTabs isAdmin={true} />
-      <form className="mt-8" onSubmit={handleNewCategorySubmit}>
+      <form className="mt-8" onSubmit={handleCategorySubmit}>
         <div className="flex gap-2 items-end">
           <div className="grow">
             {editedCategory ? "Update category" : "New category name"}
@@ -80,6 +89,7 @@ export default function CategoriesPage() {
       </form>
       <div>
         <h2 className="mt-8 text-sm text-gray-500">Existing categories</h2>
+
         {categories?.length > 0 &&
           categories.map((c) => (
             <div
@@ -87,7 +97,6 @@ export default function CategoriesPage() {
                 setEditedCategory(c);
                 setCategoryName(c.name);
               }}
-              
               className="bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center"
               key={c._id}
             >
