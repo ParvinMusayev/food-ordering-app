@@ -1,5 +1,6 @@
 "use client";
 
+import EditableImage from "@/components/layout/EditableImage";
 import UserTabs from "@/components/layout/UserTabs";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -11,7 +12,7 @@ import toast from "react-hot-toast";
 export default function ProfilePage() {
   const session = useSession();
   const { status } = session;
-
+  const [image, setImage] = useState( '');
   const [userName, setUserName] = useState("");
   const [phone, setPhone] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
@@ -65,18 +66,7 @@ export default function ProfilePage() {
     });
   }
 
-  async function handleFileChange(ev) {
-    const files = ev.target.files;
-    if (files?.length === 1) {
-      const data = new FormData();
-      data.set("file", files[0]);
-
-      await fetch("/api/upload", {
-        method: "POST",
-        body: data,
-      });
-    }
-  }
+  
 
   if (status === "loading" || !profileFetched) {
     return "Loading...";
@@ -95,23 +85,7 @@ export default function ProfilePage() {
         <div className="flex gap-4 ">
           <div>
             <div className="p-2 rounded-lg relative max-w-[120px]">
-              <Image
-                className="rounded-lg w-full h-full mb-2"
-                src={userImage ? userImage : "/profilpic.png"}
-                alt="avatar"
-                width={250}
-                height={250}
-              />
-              <label>
-                <input
-                  type="file"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
-                <span className="block border border-gray-300 rounded-lg p-2 text-center cursor-pointer">
-                  Edit
-                </span>
-              </label>
+             <EditableImage link={image} setLink={setImage} />
             </div>
           </div>
 
