@@ -6,6 +6,7 @@ import EditableImage from "@/components/layout/EditableImage";
 import UserTabs from "@/components/layout/UserTabs";
 import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function MenuItemsPage() {
   const [image, setImage] = useState("");
@@ -16,6 +17,23 @@ export default function MenuItemsPage() {
 
   async function handleFormSubmit(ev) {
     ev.preventDefault();
+    const data = { image, name, description, basePrice };
+
+    const savingPromise = new Promise(async (resolve, reject) => {
+      const response = await fetch("/api/menu-items", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.ok) resolve();
+      else reject();
+    });
+
+    await toast.promise(savingPromise, {
+      loading: "Saving...",
+      success: "Profile saved!",
+      error: "Error",
+    });
   }
 
   if (loading) {
