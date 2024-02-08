@@ -7,32 +7,38 @@ import EditableImage from "@/components/layout/EditableImage";
 import UserTabs from "@/components/layout/UserTabs";
 
 import Link from "next/link";
+import { redirect, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function EditMenuItemPage() {
-  const [image, setImage] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [basePrice, setBasePrice] = useState("");
-  const [redirectToItems, setRedirectToItems] = useState(false);
+  
   const { loading, data } = useProfile();
+
+  const [redirectToItems, setRedirectToItems] = useState(false);
+  const {id} = useParams();
+  const [menuItem, setMenuItem] = useState(null);
+
 
   useEffect(() => {
     fetch("/api/menu-items").then((res) => {
       res.json().then((items) => {
         const item = items.find((i) => i._id === id);
-        setMenuItem(item);
+        setImage(item.image)
+        setName(item.name)
+        setDescription(item.description)
+        setBasePrice(item.basePrice)
       });
     });
   }, []);
 
   async function handleFormSubmit(ev) {
     ev.preventDefault();
-    const data = { image, name, description, basePrice };
+    const data = { image, name, description, basePrice, _id:id };
 
     const savingPromise = new Promise(async (resolve, reject) => {
       const response = await fetch("/api/menu-items", {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       });
@@ -72,37 +78,7 @@ export default function EditMenuItemPage() {
         </Link>
       </div>
 
-      <form onSubmit={handleFormSubmit} className="mt-8 max-w-2xl mx-auto ">
-        <div
-          style={{ gridTemplateColumns: ".3fr .7fr" }}
-          className="gird items-start gap-4"
-        >
-          <div>
-            <EditableImage link={image} setLink={setImage} />
-          </div>
-          <div className="grow">
-            <label>Item name</label>
-            <input
-              value={name}
-              onChange={(ev) => setName(ev.target.value)}
-              type="text"
-            />
-            <label>Description</label>
-            <input
-              value={description}
-              onChange={(ev) => setDescription(ev.target.value)}
-              type="text"
-            />
-            <label>Base price</label>
-            <input
-              value={basePrice}
-              onChange={(ev) => setBasePrice(ev.target.value)}
-              type="text"
-            />
-            <button type="submit">Save</button>
-          </div>
-        </div>
-      </form>
+      
     </section>
   );
 }
