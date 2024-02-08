@@ -52,7 +52,7 @@ export default function MenuItemsPage() {
                 <div className="relative">
                   <Image
                     className="rounded-md"
-                    src={item.image}
+                    src={'/pizza.png'}
                     alt={""}
                     width={200}
                     height={200}
