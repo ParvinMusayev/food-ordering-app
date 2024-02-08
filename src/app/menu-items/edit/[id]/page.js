@@ -4,6 +4,7 @@ import { useProfile } from "@/components/UseProfile";
 import Left from "@/components/icons/Left";
 
 import EditableImage from "@/components/layout/EditableImage";
+import MenuItemForm from "@/components/layout/MenuItemForm";
 import UserTabs from "@/components/layout/UserTabs";
 
 import Link from "next/link";
@@ -12,29 +13,24 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function EditMenuItemPage() {
-  
   const { loading, data } = useProfile();
 
   const [redirectToItems, setRedirectToItems] = useState(false);
-  const {id} = useParams();
+  const { id } = useParams();
   const [menuItem, setMenuItem] = useState(null);
-
 
   useEffect(() => {
     fetch("/api/menu-items").then((res) => {
       res.json().then((items) => {
         const item = items.find((i) => i._id === id);
-        setImage(item.image)
-        setName(item.name)
-        setDescription(item.description)
-        setBasePrice(item.basePrice)
+        setMenuItem(item);
       });
     });
   }, []);
 
-  async function handleFormSubmit(ev) {
+  async function handleFormSubmit(ev, data) {
     ev.preventDefault();
-    const data = { image, name, description, basePrice, _id:id };
+    data = { ...data, _id: id };
 
     const savingPromise = new Promise(async (resolve, reject) => {
       const response = await fetch("/api/menu-items", {
@@ -78,7 +74,7 @@ export default function EditMenuItemPage() {
         </Link>
       </div>
 
-      
+      <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit} />
     </section>
   );
 }
