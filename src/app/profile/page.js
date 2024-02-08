@@ -1,13 +1,12 @@
 "use client";
 
-import EditableImage from "@/components/layout/EditableImage";
-import UserTabs from "@/components/layout/UserTabs";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
-
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+
+import EditableImage from "@/components/layout/EditableImage";
+import UserTabs from "@/components/layout/UserTabs";
 
 export default function ProfilePage() {
   const session = useSession();

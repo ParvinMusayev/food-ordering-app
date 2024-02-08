@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
 import UserTabs from "@/components/layout/UserTabs";
 import { useProfile } from "@/components/UseProfile";
-import toast from "react-hot-toast";
 
 export default function CategoriesPage() {
   const [categoryName, setCategoryName] = useState("");
