@@ -53,6 +53,14 @@ export default function NewMenuItemPage() {
   return (
     <section className="mt-8">
       <UserTabs isAdmin={true} />
+      
+      <div className="max-w-2xl mx-auto mt-8">
+        <Link href={"/menu-items"} className="button">
+          <Left />
+          <span>Show all menu items</span>
+        </Link>
+      </div>
+
       <form onSubmit={handleFormSubmit} className="mt-8 max-w-2xl mx-auto ">
         <div
           style={{ gridTemplateColumns: ".3fr .7fr" }}
