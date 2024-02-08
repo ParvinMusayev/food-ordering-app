@@ -19,6 +19,7 @@ export default function NewMenuItemPage() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [basePrice, setBasePrice] = useState("");
+  const [redirectToItems, setRedirectToItems] = useState(false);
   const { loading, data } = useProfile();
 
   async function handleFormSubmit(ev) {
@@ -40,6 +41,12 @@ export default function NewMenuItemPage() {
       success: "Profile saved!",
       error: "Error",
     });
+
+    setRedirectToItems(true);
+  }
+
+  if (redirectToItems) {
+    return redirect("/menu-items");
   }
 
   if (loading) {
@@ -53,7 +60,7 @@ export default function NewMenuItemPage() {
   return (
     <section className="mt-8">
       <UserTabs isAdmin={true} />
-      
+
       <div className="max-w-2xl mx-auto mt-8">
         <Link href={"/menu-items"} className="button">
           <Left />

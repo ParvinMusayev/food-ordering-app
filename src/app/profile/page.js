@@ -11,7 +11,7 @@ import UserTabs from "@/components/layout/UserTabs";
 export default function ProfilePage() {
   const session = useSession();
   const { status } = session;
-  const [image, setImage] = useState( '');
+  const [image, setImage] = useState("");
   const [userName, setUserName] = useState("");
   const [phone, setPhone] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
@@ -65,8 +65,6 @@ export default function ProfilePage() {
     });
   }
 
-  
-
   if (status === "loading" || !profileFetched) {
     return "Loading...";
   }
@@ -84,7 +82,7 @@ export default function ProfilePage() {
         <div className="flex gap-4 ">
           <div>
             <div className="p-2 rounded-lg relative max-w-[120px]">
-             <EditableImage link={image} setLink={setImage} />
+              <EditableImage link={image} setLink={setImage} />
             </div>
           </div>
 
