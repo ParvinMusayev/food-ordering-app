@@ -16,13 +16,17 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
     });
   }
 
-  function editSize(ev, index, prop){
-    const newValue = ev.target.value
-    setSizes(prevSizes => {
-      const newSizes = [...prevSizes]
-      newSizes[index][prop] = newValue
-      return newSizes
-    })
+  function editSize(ev, index, prop) {
+    const newValue = ev.target.value;
+    setSizes((prevSizes) => {
+      const newSizes = [...prevSizes];
+      newSizes[index][prop] = newValue;
+      return newSizes;
+    });
+  }
+
+  function removeSize(indexToRemove) {
+    setSizes((prev) => prev.filter((v, index) => index !== indexToRemove));
   }
 
   return (
@@ -88,7 +92,13 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
                     />
                   </div>
                   <div>
-                    <button type="button" className="bg-white mb-2">x</button>
+                    <button
+                      onClick={() => removeSize(index)}
+                      type="button"
+                      className="bg-white mb-2"
+                    >
+                      x
+                    </button>
                   </div>
                 </div>
               ))}
