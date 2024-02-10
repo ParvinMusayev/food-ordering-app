@@ -3,6 +3,10 @@
 import { useState } from "react";
 import EditableImage from "./EditableImage";
 
+//icons
+import Trash from "../icons/Trash";
+import Plus from "../icons/Plus";
+
 export default function MenuItemForm({ onSubmit, menuItem }) {
   const [image, setImage] = useState(menuItem?.image || "");
   const [name, setName] = useState(menuItem?.name || "");
@@ -67,45 +71,7 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
             onChange={(ev) => setBasePrice(ev.target.value)}
             type="text"
           />
-          <div className="bg-gray-200 p-2 rounded-md mb-2">
-            <label>Sizes</label>
-            {sizes?.length > 0 &&
-              sizes.map((size, index) => (
-                <div className="flex items-end gap-2">
-                  <div>
-                    <label>Size name</label>
-                    <input
-                      type="text"
-                      placeholder="Size name"
-                      value={size.name}
-                      onChange={(ev) => editSize(ev, index, "name")}
-                    />
-                  </div>
-
-                  <div>
-                    <label>Extra price</label>
-                    <input
-                      type="text"
-                      placeholder="Extra price"
-                      value={size.price}
-                      onChange={(ev) => editSize(ev, index, "price")}
-                    />
-                  </div>
-                  <div>
-                    <button
-                      onClick={() => removeSize(index)}
-                      type="button"
-                      className="bg-white mb-2"
-                    >
-                      x
-                    </button>
-                  </div>
-                </div>
-              ))}
-            <button type="button" onClick={addSizes} className="bg-white">
-              Add item size
-            </button>
-          </div>
+          
           <button type="submit">Save</button>
         </div>
       </div>
