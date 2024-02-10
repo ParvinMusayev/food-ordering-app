@@ -1,39 +1,31 @@
 import Plus from "@/components/icons/Plus";
 import Trash from "@/components/icons/Trash";
-import { useState } from "react";
 
-export default function MenuItemPriceProps({
-  name,
-  addLabel,
-  props,
-  setProps,
-}) {
-  const [isOpen, setIsOpen] = useState([]);
-
-  function addSizes() {
-    setSizes((oldSizes) => {
-      return [...oldSizes, { name: "", price: 0 }];
+export default function MenuItemPriceProps({ props, setProps }) {
+  function addProp() {
+    setProps((oldProps) => {
+      return [...oldProps, { name: "", price: 0 }];
     });
   }
 
-  function editSize(ev, index, prop) {
+  function editProp(ev, index, prop) {
     const newValue = ev.target.value;
-    setSizes((prevSizes) => {
+    setProps((prevSizes) => {
       const newSizes = [...prevSizes];
       newSizes[index][prop] = newValue;
       return newSizes;
     });
   }
 
-  function removeSize(indexToRemove) {
-    setSizes((prev) => prev.filter((v, index) => index !== indexToRemove));
+  function removeProp(indexToRemove) {
+    setProps((prev) => prev.filter((v, index) => index !== indexToRemove));
   }
 
   return (
     <div className="bg-gray-200 p-2 rounded-md mb-2">
       <label>Sizes</label>
-      {sizes?.length > 0 &&
-        sizes.map((size, index) => (
+      {props?.length > 0 &&
+        props.map((size, index) => (
           <div className="flex items-end gap-2">
             <div>
               <label>Size name</label>
@@ -41,7 +33,7 @@ export default function MenuItemPriceProps({
                 type="text"
                 placeholder="Size name"
                 value={size.name}
-                onChange={(ev) => editSize(ev, index, "name")}
+                onChange={(ev) => editProp(ev, index, "name")}
               />
             </div>
 
@@ -51,12 +43,12 @@ export default function MenuItemPriceProps({
                 type="text"
                 placeholder="Extra price"
                 value={size.price}
-                onChange={(ev) => editSize(ev, index, "price")}
+                onChange={(ev) => editProp(ev, index, "price")}
               />
             </div>
             <div>
               <button
-                onClick={() => removeSize(index)}
+                onClick={() => removeProp(index)}
                 type="button"
                 className="bg-white mb-2 px-2"
               >
@@ -65,11 +57,7 @@ export default function MenuItemPriceProps({
             </div>
           </div>
         ))}
-      <button
-        type="button"
-        onClick={addSizes}
-        className="bg-white items-center"
-      >
+      <button type="button" onClick={addProp} className="bg-white items-center">
         <Plus className="w-4 h-4" />
         <span>Add item size</span>
       </button>
