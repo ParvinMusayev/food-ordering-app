@@ -11,6 +11,7 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
   const [description, setDescription] = useState(menuItem?.description || "");
   const [basePrice, setBasePrice] = useState(menuItem?.basePrice || "");
   const [sizes, setSizes] = useState([]);
+  const [extraIngredientPrices, setExtraIngredientPrices] = useState([]);
 
   return (
     <form
@@ -20,6 +21,9 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
           name,
           description,
           basePrice,
+          sizes,
+          extraIngredientPrices,
+          category,
         })
       }
       className="mt-8 max-w-2xl mx-auto "
@@ -50,7 +54,18 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
             onChange={(ev) => setBasePrice(ev.target.value)}
             type="text"
           />
-          <MenuItemPriceProps props={sizes} setProps={setSizes} />
+          <MenuItemPriceProps
+            name={"Sizes"}
+            addLabel={"Add item size"}
+            props={sizes}
+            setProps={setSizes}
+          />
+          <MenuItemPriceProps
+            name={"Extra ingredients"}
+            addLabel={"Add ingredients prices"}
+            props={extraIngredientPrices}
+            setProps={setExtraIngredientPrices}
+          />
           <button type="submit">Save</button>
         </div>
       </div>
