@@ -1,19 +1,14 @@
 "use client";
-
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-
-import { useProfile } from "@/components/UseProfile";
-import EditableImage from "@/components/layout/EditableImage";
-import UserTabs from "@/components/layout/UserTabs";
-import Link from "next/link";
 import Right from "@/components/icons/Right";
+import UserTabs from "@/components/layout/UserTabs";
+import { useProfile } from "@/components/UseProfile";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function MenuItemsPage() {
-  const { loading, data } = useProfile();
-
   const [menuItems, setMenuItems] = useState([]);
+  const { loading, data } = useProfile();
 
   useEffect(() => {
     fetch("/api/menu-items").then((res) => {
@@ -30,6 +25,7 @@ export default function MenuItemsPage() {
   if (!data.admin) {
     return "Not an admin.";
   }
+
   return (
     <section className="mt-8 max-w-2xl mx-auto">
       <UserTabs isAdmin={true} />
@@ -52,7 +48,7 @@ export default function MenuItemsPage() {
                 <div className="relative">
                   <Image
                     className="rounded-md"
-                    src={'/pizza.png'}
+                    src={item.image}
                     alt={""}
                     width={200}
                     height={200}
