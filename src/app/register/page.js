@@ -1,5 +1,5 @@
 "use client";
-
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -10,7 +10,6 @@ export default function RegisterPage() {
   const [creatingUser, setCreatingUser] = useState(false);
   const [userCreated, setUserCreated] = useState(false);
   const [error, setError] = useState(false);
-
   async function handleFormSubmit(ev) {
     ev.preventDefault();
     setCreatingUser(true);
@@ -30,7 +29,7 @@ export default function RegisterPage() {
   }
   return (
     <section className="mt-8">
-      <h1 className="text-center text-primary text-4xl mb-4">Register</h1>{" "}
+      <h1 className="text-center text-primary text-4xl mb-4">Register</h1>
       {userCreated && (
         <div className="my-4 text-center">
           User created.
@@ -53,29 +52,29 @@ export default function RegisterPage() {
           type="email"
           placeholder="email"
           value={email}
-          onChange={(ev) => setEmail(ev.target.value)}
           disabled={creatingUser}
+          onChange={(ev) => setEmail(ev.target.value)}
         />
         <input
           type="password"
           placeholder="password"
           value={password}
-          onChange={(ev) => setPassword(ev.target.value)}
           disabled={creatingUser}
+          onChange={(ev) => setPassword(ev.target.value)}
         />
         <button type="submit" disabled={creatingUser}>
           Register
         </button>
-
         <div className="my-4 text-center text-gray-500">
           or login with provider
         </div>
-
-        <button className="flex gap-4 justify-center">
+        <button
+          onClick={() => signIn("google", { callbackUrl: "/" })}
+          className="flex gap-4 justify-center"
+        >
           <Image src={"/google.png"} alt={""} width={24} height={24} />
           Login with google
         </button>
-
         <div className="text-center my-4 text-gray-500 border-t pt-4">
           Existing account?{" "}
           <Link className="underline" href={"/login"}>
